@@ -1,0 +1,17 @@
+{
+  "name": "base",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite-nest dev",
+    "build": "vite-nest build && node ./dist/bootstrap.mjs"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.3.10",
+    "@nestjs/core": "^10.3.10",
+    "@nestjs/platform-express": "^10.3.10"
+  },
+  "devDependencies": {
+    "unplugin-auto-import": "^0.18.2",
+    "vite": "^5.3.5"
+  }
+}
