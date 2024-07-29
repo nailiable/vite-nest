@@ -1,6 +1,9 @@
 import { join } from 'node:path'
 import { cwd } from 'node:process'
 import type { ConfigEnv, Plugin } from 'vite'
+import { INestApplication } from '@nestjs/common'
+import { NestApplication } from '@nestjs/core'
+import commonjs from 'vite-plugin-commonjs'
 import { swc } from './plugin-swc'
 import { getDefaultSwcConfig } from './config'
 
@@ -8,6 +11,12 @@ export interface NestPluginOptions {
   entryPath: string
   rewriteSwcOptions?: Parameters<typeof swc>[0]
   bootstrap?: string
+}
+
+export interface EntryModuleShape {
+  default: INestApplication
+  afterListen?: (port: number) => void | Promise<void>
+  // customPrintUrlLogger?: (urls: ResolvedServerUrls) => LoggerService | void | false | Promise<LoggerService | void | false>
 }
 
 export function nest(opts: NestPluginOptions = { entryPath: join(cwd(), './src/main.ts') }): Plugin[] {
@@ -19,6 +28,7 @@ export function nest(opts: NestPluginOptions = { entryPath: join(cwd(), './src/m
 
   return [
     swc(opts.rewriteSwcOptions || defaultSwcConfig),
+    commonjs(),
     {
       name: 'vite-plugin-nest',
       config(config, currentEnv) {
@@ -54,6 +64,41 @@ export function nest(opts: NestPluginOptions = { entryPath: join(cwd(), './src/m
             fileName: opts.bootstrap || 'bootstrap.mjs',
           })
         }
+      },
+      async configureServer(viteServer) {
+        let mod: EntryModuleShape | null = null
+        async function loadModule() {
+          if (mod && mod.default && mod.default.close) {
+            await mod.default.close()
+            mod = null
+          }
+
+          mod = await viteServer.ssrLoadModule(opts.entryPath || './src/main.ts') as EntryModuleShape
+          if (!mod || !mod.default || !(mod.default instanceof NestApplication))
+            throw new TypeError('The entry module\'s default export must export a NestApplication instance.')
+        }
+
+        viteServer.middlewares.use(async (req, res) => {
+          try {
+            await loadModule()
+            await mod.default.init()
+            const instance = mod.default.getHttpAdapter().getInstance()
+            if (instance && typeof instance === 'function') {
+              instance(req, res)
+            }
+            else if (instance && typeof instance === 'object') {
+              const objectApp = await instance.ready()
+              objectApp.routing(req, res)
+            }
+          }
+          catch (error) {
+            console.error(error)
+            res.statusCode = 500
+            res.end('Internal server error')
+          }
+        })
+
+        viteServer.watcher.on('all', async () => await loadModule())
       },
     },
   ]

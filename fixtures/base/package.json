@@ -1,5 +1,6 @@
 {
   "name": "base",
+  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite-nest dev",
@@ -11,6 +12,7 @@
     "@nestjs/platform-express": "^10.3.10"
   },
   "devDependencies": {
+    "fast-glob": "^3.3.2",
     "unplugin-auto-import": "^0.18.2",
     "vite": "^5.3.5"
   }

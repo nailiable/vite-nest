@@ -3,6 +3,7 @@
   "author": "Zero <gczgroup@qq.com>",
   "scripts": {
     "build": "pnpm -F vite-nest build",
+    "build:module": "pnpm -F vite-nest-module build",
     "dev": "pnpm -F base dev",
     "dev:build": "pnpm -F base build",
     "lint": "eslint . --fix",
