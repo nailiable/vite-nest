@@ -18,7 +18,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "watch": "tsup --watch"
+    "watch": "tsup --watch",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.10",
