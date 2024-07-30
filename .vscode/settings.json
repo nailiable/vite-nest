@@ -43,6 +43,9 @@
     "yaml"
   ],
   "cSpell.words": [
+    "Arrayable",
+    "commitlint",
+    "Earlyhints",
     "nestjs",
     "pluginutils",
     "tsup",

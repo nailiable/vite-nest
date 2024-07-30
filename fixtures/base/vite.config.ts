@@ -1,6 +1,7 @@
 import { resolve } from 'node:path'
 import { Plugin, defineConfig } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import { NestCommonAutoImportPreset, NestSwaggerAutoImportPreset } from 'vite-nest-auto-import'
 import 'vite-nest'
 
 function autoScan(): Plugin {
@@ -115,10 +116,8 @@ export default defineConfig({
   plugins: [
     AutoImport({
       imports: [
-        {
-          from: '@nestjs/common',
-          imports: ['Module', 'Controller', 'Get', 'Post', 'Put', 'Patch', 'Delete', 'Body', 'Param', 'Query', 'Req', 'Res', 'Next', 'Render', 'Inject', 'Injectable', 'UseGuards', 'UseInterceptors', 'UsePipes', 'UseFilters'],
-        },
+        ...NestCommonAutoImportPreset(),
+        ...NestSwaggerAutoImportPreset(),
       ],
       dts: './src/auto-imports.d.ts',
       dirs: [
