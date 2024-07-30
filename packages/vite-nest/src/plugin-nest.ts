@@ -35,12 +35,15 @@ export function nest(opts: NestPluginOptions = { entryPath: join(cwd(), './src/m
         env = currentEnv
         config.esbuild = false
         config.appType = 'custom'
+
         if (!config.build)
           config.build = {}
         config.build.ssr = opts.entryPath || join(cwd(), './src/main.ts')
+
         if (!config.build.rollupOptions)
           config.build.rollupOptions = {}
         config.build.rollupOptions.input = opts.entryPath || join(cwd(), './src/main.ts')
+
         return config
       },
       resolveId(id) {

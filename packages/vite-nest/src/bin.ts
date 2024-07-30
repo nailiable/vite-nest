@@ -5,7 +5,7 @@ import { argv } from 'node:process'
 import { Command } from 'commander'
 import { loadConfig } from 'c12'
 import type { UserConfig } from 'vite'
-import { mergeConfig, version as viteVersion } from 'vite'
+import { version as viteVersion } from 'vite'
 import { Logger } from '@nestjs/common'
 import Chalk from 'chalk'
 import { name, version } from '../package.json'
@@ -32,20 +32,13 @@ const devCommand = new Command('dev')
   .alias('d')
   .description('Start the development server.')
   .argument('[entryPath]', 'Entry path.')
-  .option('-p, --port <port>', 'Port number.')
-  .option('--host <host>', 'Host name.', true)
-  .action(async (entryPath, { host, port }) => {
+  .action(async (entryPath) => {
     const viteConfig = await readViteConfig()
     const viteServer = await createServer({
       entryPath: entryPath || viteConfig.config.viteNestOptions?.entryPath || './src/main.ts',
       vite: {
         type: 'merge',
-        config: mergeConfig(viteConfig.config, {
-          server: {
-            host: host || 'localhost',
-            port: port || Number(port),
-          },
-        }),
+        config: viteConfig.config,
       },
       rewriteSwcOptions: viteConfig.config.viteNestOptions?.rewriteSwcOptions,
     })
