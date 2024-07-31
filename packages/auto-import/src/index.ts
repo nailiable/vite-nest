@@ -8,7 +8,6 @@ export function NestCoreAutoImportPreset(): Import {
     {
       from: '@nestjs/core',
       imports: [
-        'Reflector',
       ],
     },
   ]

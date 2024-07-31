@@ -8,7 +8,7 @@ export function getAutoScanCode(opts: NestAutoScanOptions) {
   return `import { join as ${prefix}join, relative as ${prefix}relative } from 'node:path';import ${prefix}glob from 'fast-glob';
 
   const ${prefix}mods = await (async () => {
-    const ${prefix}modPromises = import.meta.glob(['./**/*.ts', '!./${relative(dirname(opts.rootModulePath), opts.entryPath)}', '!**/*.d.ts'])
+    const ${prefix}modPromises = import.meta.glob(['./**/*.ts', '!./${relative(dirname(opts.entryPath), opts.entryPath)}', '!**/*.d.ts'])
     const ${prefix}objectMods = {}
     for (const key in ${prefix}modPromises)
       ${prefix}objectMods[key] = await ${prefix}modPromises[key]()

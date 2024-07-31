@@ -47,8 +47,10 @@ export function NestAutoScan(options: NestAutoScanOptions = {}): Plugin | Plugin
         if ((globalThis.viteEnv as ConfigEnv).command === 'build' && globalThis.__hasTransformedSet.has(id))
           return null
 
-        // apply auto scan code
-        code = `${autoScanCode}${code}`
+        if (id !== opts.rootModulePath)
+          // apply auto scan code
+          code = `${autoScanCode}${code}`
+
         if (id === opts.rootModulePath)
           code = `${rootScanCode}${code}`
         globalThis.__hasTransformedSet.add(id)
