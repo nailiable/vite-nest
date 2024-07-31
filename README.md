@@ -1,3 +1,7 @@
-# Monorepo
+<div align="center">
 
-Add a description of the project here.
+# Vite nest
+
+The best 🦁️nest.js + ⚡️vite's coding style tool.
+
+</div>
