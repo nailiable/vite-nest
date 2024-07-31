@@ -20,7 +20,7 @@ export function getAutoScanCode(opts: NestAutoScanOptions) {
     return typeof v === 'function' && v.toString().startsWith('class')
   }
 
-  function AutoScan() {
+  globalThis.AutoScan = function() {
     return (target) => {
       for (const modPath in ${prefix}mods) {
         const mod = ${prefix}mods[modPath]
