@@ -3,6 +3,17 @@ import { Options } from 'unplugin-auto-import/types'
 export type ArrayItem<T> = T extends (infer U)[] ? U : T
 export type Import = Exclude<Options['imports'], ArrayItem<Options['imports']>>
 
+export function NestCoreAutoImportPreset(): Import {
+  return [
+    {
+      from: '@nestjs/core',
+      imports: [
+        'Reflector',
+      ],
+    },
+  ]
+}
+
 export function NestCommonAutoImportPreset(): Import {
   return [
     {

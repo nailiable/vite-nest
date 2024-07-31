@@ -1,7 +1,7 @@
 {
   "name": "vite-nest-auto-import",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Unplugin auto import preset for nest.js",
   "exports": {
     ".": {
