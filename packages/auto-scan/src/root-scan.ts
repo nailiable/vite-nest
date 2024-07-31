@@ -76,9 +76,12 @@ export function getRootScanCode(opts: NestAutoScanOptions): string {
         for (const key in mod) {
           if (!${prefix}_root_isClass(mod[key]))
             continue
-
-          const oldModulesArray = Reflect.getMetadata('imports', target) || []
-          Reflect.defineMetadata('imports', [...oldModulesArray, mod[key]], target)
+          
+          const isRootScanModule = Reflect.getMetadata('__root_scan__', mod[key])
+          if (isRootScanModule) {
+            const oldModulesArray = Reflect.getMetadata('imports', target) || []
+            Reflect.defineMetadata('imports', [...oldModulesArray, mod[key]], target)
+          }
         }
       }
     }

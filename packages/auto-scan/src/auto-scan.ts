@@ -20,8 +20,9 @@ export function getAutoScanCode(opts: NestAutoScanOptions) {
     return typeof v === 'function' && v.toString().startsWith('class')
   }
 
-  globalThis.AutoScan = function() {
+  globalThis.AutoScan = function(canRootScan = true) {
     return (target) => {
+      Reflect.defineMetadata('__root_scan__', typeof canRootScan === 'boolean' ? canRootScan : true, target)
       for (const modPath in ${prefix}mods) {
         const mod = ${prefix}mods[modPath]
         for (const key in mod) {
