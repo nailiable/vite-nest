@@ -1,2 +1,2 @@
-@ModuleScan()
+@AutoScan()
 export default class CategoryModule {}

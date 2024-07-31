@@ -13,4 +13,5 @@ const modules = Object.fromEntries(await Promise.all(Object.entries(modulePromis
       .filter(Boolean),
   ],
 })
+@RootScan()
 export class AppModule {}

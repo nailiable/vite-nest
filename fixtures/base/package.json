@@ -16,6 +16,7 @@
     "fast-glob": "^3.3.2",
     "unplugin-auto-import": "^0.18.2",
     "vite": "^5.3.5",
-    "vite-nest-auto-import": "workspace:*"
+    "vite-nest-auto-import": "workspace:*",
+    "vite-nest-auto-scan": "workspace:*"
   }
 }

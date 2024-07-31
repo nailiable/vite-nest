@@ -48,6 +48,7 @@
     "Earlyhints",
     "nestjs",
     "pluginutils",
+    "treeshake",
     "tsup",
     "unplugin"
   ],

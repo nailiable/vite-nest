@@ -1,3 +1,2 @@
 /// <reference types="vite/client" />
-
-declare function ModuleScan(): ClassDecorator
+/// <reference types="vite-nest-auto-scan/client" />
