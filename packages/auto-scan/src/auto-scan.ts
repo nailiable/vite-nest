@@ -39,6 +39,9 @@ export function getAutoScanCode(opts: NestAutoScanOptions) {
           if (isInjectable) {
             const oldProvidersArray = Reflect.getMetadata('providers', target) || []
             Reflect.defineMetadata('providers', [...oldProvidersArray, mod[key]], target)
+
+            const oldExportsArray = Reflect.getMetadata('exports', target) || []
+            Reflect.defineMetadata('exports', [...oldExportsArray, mod[key]], target)
           }
         }
       }
