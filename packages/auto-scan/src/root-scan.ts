@@ -18,7 +18,7 @@ export function getRootScanCode(opts: NestAutoScanOptions): string {
     return typeof v === 'function' && v.toString().startsWith('class')
   }
 
-  globalThis.RootScan = function() {
+  function RootScan() {
     return (target) => {
       for (const modPath in ${prefix}_service_mods) {
         const mod = ${prefix}_service_mods[modPath]
