@@ -15,7 +15,7 @@ export function createLogger(context: string = 'Vite'): ViteLogger {
   let hasErrorLogged = false
 
   function isViteTitleLog(msg: string) {
-    if (msg.includes('VITE v') && msg.includes('ready in'))
+    if (msg.includes('VITE') && msg.includes('ready') && msg.includes('in') && msg.includes('ms'))
       return true
     return false
   }
@@ -27,20 +27,14 @@ export function createLogger(context: string = 'Vite'): ViteLogger {
       logger.log(msg)
     },
     warn(msg) {
-      if (isViteTitleLog(msg))
-        return
       hasWarned = true
       logger.warn(msg)
     },
     error(msg) {
-      if (isViteTitleLog(msg))
-        return
       hasErrorLogged = true
       logger.error(msg)
     },
     warnOnce(msg) {
-      if (isViteTitleLog(msg))
-        return
       logger.warn(msg)
     },
     clearScreen() {
