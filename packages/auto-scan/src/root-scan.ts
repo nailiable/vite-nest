@@ -10,32 +10,9 @@ export function getRootScanCode(opts: NestAutoScanOptions): string {
 
   return `import { join as ${prefix}join, relative as ${prefix}relative } from 'node:path';import ${prefix}glob from 'fast-glob';
   
-  const ${prefix}_service_mods = await (async () => {
-    const ${prefix}_service_modPromises = import.meta.glob(${JSON.stringify(providersGlob)})
-    const ${prefix}_service_objectMods = {}
-    for (const key in ${prefix}_service_modPromises)
-      ${prefix}_service_objectMods[key] = await ${prefix}_service_modPromises[key]()
-
-    return ${prefix}_service_objectMods
-  })();
-  
-  const ${prefix}_controller_mods = await (async () => {
-    const ${prefix}_controller_modPromises = import.meta.glob(${JSON.stringify(controllersGlob)})
-    const ${prefix}_controller_objectMods = {}
-    for (const key in ${prefix}_controller_modPromises)
-      ${prefix}_controller_objectMods[key] = await ${prefix}_controller_modPromises[key]()
-
-    return ${prefix}_controller_objectMods
-  })();
-
-  const ${prefix}_module_mods = await (async () => {
-    const ${prefix}_module_modPromises = import.meta.glob(${JSON.stringify(importsGlob)})
-    const ${prefix}_module_objectMods = {}
-    for (const key in ${prefix}_module_modPromises)
-      ${prefix}_module_objectMods[key] = await ${prefix}_module_modPromises[key]()
-
-    return ${prefix}_module_objectMods
-  })();
+  const ${prefix}_service_mods = import.meta.glob(${JSON.stringify(providersGlob)}, { eager: true });
+  const ${prefix}_controller_mods = import.meta.glob(${JSON.stringify(controllersGlob)}, { eager: true })
+  const ${prefix}_module_mods = import.meta.glob(${JSON.stringify(importsGlob)}, { eager: true })
   
   function ${prefix}_root_isClass(v) {
     return typeof v === 'function' && v.toString().startsWith('class')
