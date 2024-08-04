@@ -9,40 +9,35 @@ export function printServerUrls(urls: ResolvedServerUrls, logger: LoggerService 
     logger.log(`${'Network:'} ${url}`)
 }
 
-export class NestStyleLogger implements ViteLogger {
-  private readonly logger: Logger
+export function createLogger(context: string = 'Vite'): ViteLogger {
+  const logger = new Logger(context)
+  let hasWarned = false
+  let hasErrorLogged = false
 
-  constructor(context: string) {
-    this.logger = new Logger(context)
-  }
-
-  info(msg: string): void {
-    this.logger.log(msg)
-  }
-
-  hasWarned: boolean = false
-
-  warn(msg: string): void {
-    this.hasWarned = true
-    this.logger.warn(msg)
-  }
-
-  private _hasErrorLogged: boolean = false
-  error(msg: string): void {
-    this._hasErrorLogged = true
-    this.logger.error(msg)
-  }
-
-  warnOnce(msg: string): void {
-    this.logger.warn(msg)
-  }
-
-  clearScreen(): void {
-    // eslint-disable-next-line no-console
-    console.clear()
-  }
-
-  hasErrorLogged() {
-    return this._hasErrorLogged
+  return {
+    info(msg) {
+      logger.log(msg)
+    },
+    warn(msg) {
+      hasWarned = true
+      logger.warn(msg)
+    },
+    error(msg) {
+      hasErrorLogged = true
+      logger.error(msg)
+    },
+    warnOnce(msg) {
+      logger.warn(msg)
+    },
+    clearScreen() {
+      // eslint-disable-next-line no-console
+      console.clear()
+    },
+    get hasWarned() {
+      return hasWarned
+    },
+    hasErrorLogged() {
+      return hasErrorLogged
+    },
   }
 }
