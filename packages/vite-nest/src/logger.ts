@@ -14,19 +14,33 @@ export function createLogger(context: string = 'Vite'): ViteLogger {
   let hasWarned = false
   let hasErrorLogged = false
 
+  function isViteTitleLog(msg: string) {
+    if (msg.includes('VITE v') && msg.includes('ready in'))
+      return true
+    return false
+  }
+
   return {
     info(msg) {
+      if (isViteTitleLog(msg))
+        return
       logger.log(msg)
     },
     warn(msg) {
+      if (isViteTitleLog(msg))
+        return
       hasWarned = true
       logger.warn(msg)
     },
     error(msg) {
+      if (isViteTitleLog(msg))
+        return
       hasErrorLogged = true
       logger.error(msg)
     },
     warnOnce(msg) {
+      if (isViteTitleLog(msg))
+        return
       logger.warn(msg)
     },
     clearScreen() {
