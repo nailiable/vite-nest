@@ -182,7 +182,7 @@ export function NestScheduleAutoImportPreset(): Import {
       ],
     },
     {
-      from: name,
+      from: `${name}/schedule`,
       imports: [
         'ZhCronExpression',
       ],
