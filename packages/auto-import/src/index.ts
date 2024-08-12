@@ -1,4 +1,5 @@
 import { Options } from 'unplugin-auto-import/types'
+import { name } from '../package.json'
 
 export type ArrayItem<T> = T extends (infer U)[] ? U : T
 export type Import = Exclude<Options['imports'], ArrayItem<Options['imports']>>
@@ -167,4 +168,26 @@ export function NestSwaggerAutoImportPreset(): Import {
       ],
     },
   ]
+}
+
+export function NestScheduleAutoImportPreset(): Import {
+  const imports: Import = [
+    {
+      from: '@nestjs/schedule',
+      imports: [
+        'Cron',
+        'Interval',
+        'Timeout',
+        'CronExpression',
+      ],
+    },
+    {
+      from: name,
+      imports: [
+        'ZhCronExpression',
+      ],
+    },
+  ]
+
+  return imports
 }

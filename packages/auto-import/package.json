@@ -1,12 +1,16 @@
 {
   "name": "vite-nest-auto-import",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Unplugin auto import preset for nest.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./schedule": {
+      "import": "./dist/schedule.js",
+      "require": "./dist/schedule.cjs"
     }
   },
   "main": "./dist/index.cjs",
